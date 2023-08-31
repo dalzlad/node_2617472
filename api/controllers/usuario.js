@@ -15,6 +15,24 @@ const usuarioGet = async(req, res = response) =>{
     })   
 }
 
+//Método POST de la api
+const usuarioPost = async(req, res) => {
+    let mensaje = 'Inserción Exitosa'
+    //const body = req.body //Captura de atributos
+    //console.log(body);
+    try {
+        const usuario = new Usuario({nombre, password, rol, estado}) //Instanciando el objeto
+        await usuario.save() //Inserta en la colección
+    } catch (error) {
+        mensaje = error
+    }
+    res.json({
+        msg: mensaje
+    })
+}
+
+
 module.exports = {
-    usuarioGet
+    usuarioGet,
+    usuarioPost
 }

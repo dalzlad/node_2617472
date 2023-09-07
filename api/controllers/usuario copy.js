@@ -49,27 +49,12 @@ const usuarioPut = async(req, res = response) => {
     })
 }
 
-//Eliminación
-const usuarioDelete = async(req, res) => {
 
-    const {_id} = req.query
-    let mensaje = 'La eliminiación se efectuó exitosamente.'
 
-    try{
-        const usuario = await Usuario.deleteOne({_id: _id})
-    }
-    catch(error){
-        mensaje = 'Se presentaron problemas en la eliminación.'
-    }
 
-    res.json({
-        msg: mensaje
-    })
-}
 
 module.exports = {
     usuarioGet,
     usuarioPost,
-    usuarioPut,
-    usuarioDelete
+    usuarioPut
 }

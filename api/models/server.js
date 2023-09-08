@@ -4,6 +4,7 @@ const cors  = require('cors');//Implementar seguridad
 const bodyParser = require('body-parser')//Recibir datos de formularios html
 const { dbConnection } = require('../database/config')
 
+
 class Server{
 
     constructor(){

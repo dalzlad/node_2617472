@@ -31,9 +31,12 @@ const usuarioPost = async(req, res) => {
     })
 }
 
+//Juan Sebastián Granada
+
 //Modifcación
 const usuarioPut = async(req, res = response) => {
-    const {nombre, password, rol, estado} = req.query
+
+    const {nombre, password, rol, estado} = req.body
     let mensaje = 'Modificación exitosa'
     try{
          await Usuario.findOneAndUpdate({nombre: nombre}, 

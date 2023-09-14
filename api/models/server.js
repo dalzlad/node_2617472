@@ -10,6 +10,7 @@ class Server{
         this.app = express()
         this.port = process.env.PORT //Capturando variable puerto
         this.usuarioPath = '/api/usuario' //Ruta pública
+        this.authPath = '/api/auth'
         this.middlewares()
         this.conectarDB()
         this.routes()
@@ -30,6 +31,7 @@ class Server{
 
     routes(){
         this.app.use(this.usuarioPath, require('../routes/usuario'))
+        this.app.use(this.authPath, require('../routes/auth'))
     }
     
 

@@ -1,5 +1,7 @@
 const Usuario = require('../models/usuario')
 const bcrypt = require('bcrypt') //Encriptar
+const { generarJWT } = require('../helpers/generar_jwt')
+const jwt = require('jsonwebtoken');
 
 async function comparePassword(passwordForm, passworsBD) {
     const result = await bcrypt.compare(passwordForm, passworsBD);
@@ -26,8 +28,12 @@ const login = async(req, res) => {
         resultado = await comparePassword(password, usuarios.password)
 
         if(resultado == true){
+            const token = await generarJWT(usuarios)
+            res.cookie('token',token);//creando la cookie
+
             return res.status(200).json({
-                msg: 'Bienvenido'
+                //msg: 'Bienvenido'
+                token
             })
         }
         else{
@@ -43,8 +49,26 @@ const login = async(req, res) => {
     }
 }
 
+const isAuthenticated = async (req,res,next)=>{
+    try {
+        const {token} = req.cookies;
+        console.log('token:'+token)
+        if(!token){
+            return next('Por favor logueese.');
+        }
+        const verify = jwt.verify(token,process.env.SECRETKEY);
+        console.log('verify:'+verify)
+        
+        req.user = await Usuario.findById(verify.id);
+        next();
+    } catch (error) {
+       return next(error); 
+    }
+}
+
 module.exports = {
-    login
+    login,
+    isAuthenticated
 }
 
 //Alexandra Gamboa
